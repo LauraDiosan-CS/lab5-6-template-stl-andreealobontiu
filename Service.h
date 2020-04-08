@@ -9,6 +9,7 @@ class Service
 {
 private:
 	Repository repo;
+	RepoFile repoFile;
 public:
 	Service();
 	~Service();
