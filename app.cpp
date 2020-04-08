@@ -1,6 +1,8 @@
 #include "Repository.h"
 #include "Masina.h"
 #include "teste.h"
+#include "Service.h"
+#include "UI.h"
 #include <iostream>
  
 using namespace std;
@@ -9,11 +11,14 @@ int main()
 {
 	testMasina();
 	testRepository();
-	Repository repo; 
+	testService();
+	cout << endl;
 
-	Masina m1 = Masina("andreea", "ab06kxv", "ocupat");
-	Masina m2 = Masina(m1);
+	UI u;
+	u.interFace();
+	system("pause");
 
-	cout << m1.toString() << endl << m2.toString() << endl;
 	
+	
+	return 0;
 }
