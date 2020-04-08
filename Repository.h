@@ -7,6 +7,7 @@ class Repository {
 private:
 	list<Masina> masini;
 	list<Masina>::iterator it;
+	int capacitateMax = 7;
 public:
 	Repository();
 	~Repository();
@@ -17,5 +18,6 @@ public:
 	int getLen();
 	bool findElem(Masina m);
 	list<Masina> getAll();
+	
 	
 };

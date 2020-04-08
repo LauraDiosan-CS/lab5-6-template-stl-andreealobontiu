@@ -26,7 +26,12 @@ Repository Service::getRepo()
 //out: -
 void Service::addMasina(Masina m)
 {
-	this->repo.addMasina(m);
+	if(this->repo.findElem(m)==true)
+	{
+		cout << "Masina exista deja in gestiune" << endl << endl;
+	}
+	else
+		this->repo.addMasina(m);
 }
 
 //functie care actualizeaza informatiile despre o masina
@@ -60,4 +65,17 @@ void Service::deleteMasina(Masina m)
 int Service::getLen()
 {
 	return this->repo.getAll().size();
+}
+
+int Service::getOcupat()
+{
+	int ocupat = 0;
+	for (auto elem:this->repo.getAll())
+	{
+		if (strcmp(elem.getStatus(),"ocupat")==0)
+		{
+			ocupat++;
+		}
+	}
+	return ocupat;
 }

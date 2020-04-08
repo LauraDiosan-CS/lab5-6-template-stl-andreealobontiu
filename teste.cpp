@@ -85,6 +85,8 @@ void testService()
 	serv.getRepo().getAll().clear();
 	assert(serv.getLen() != 0);
 	assert(serv.getRepo().getAll().empty() == false);
+
+	assert(serv.getOcupat() == 1);
 	
 
 	cout << "Testele pentru clasa Service functioneaza" << endl;

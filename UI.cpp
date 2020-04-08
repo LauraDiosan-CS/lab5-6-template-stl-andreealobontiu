@@ -11,9 +11,12 @@ void UI::printMeniu()
 	cout << "2. Arata lista de masini" << endl;
 	cout << "3. Actualizeaza o masina" << endl;
 	cout << "4. Sterge o masina" << endl << endl;
+	/*cout << "------SENZOR------" << endl;
+	cout << "5. Intra cu o masina" << endl;
+	cout << "6. Iesi cu o masina" << endl<<endl;*/
 }
 
-//functie care ruleaza applicatia
+//functie care ruleaza aplicatia
 void UI::interFace()
 {
 	int optiune;
@@ -24,7 +27,7 @@ void UI::interFace()
 	Masina m3 = Masina("Laura", "CJ-76-GHF", "liber");
 	Masina m4 = Masina("Constantin", "TL-03-LDF", "ocupat");
 	Masina m5 = Masina("Dan", "SM-50-THU", "ocupat");
-	Masina m6 = Masina(m1);
+	Masina m6 = Masina("Maria", "SM-45-BDJ","liber");
 
 	this->serv.addMasina(m1);
 	this->serv.addMasina(m2);
@@ -33,6 +36,9 @@ void UI::interFace()
 	this->serv.addMasina(m5);
 	this->serv.addMasina(m6);
 
+	int capacitateMax = 4;
+	int capacitateCurenta = this->serv.getOcupat();
+	
 	while (stop)
 	{
 		printMeniu();
@@ -61,9 +67,26 @@ void UI::interFace()
 			cout << "Introduceti statusul: ";
 			cin >> status;
 
-			Masina masinaAdd = Masina(posesor, nrInmatriculare, status);
-			this->serv.addMasina(masinaAdd);
-			cout << "Masina a fost adaugata" << endl << endl;
+			if (strcmp(status,"ocupat")==0)
+			{
+				if (capacitateCurenta < capacitateMax)
+				{
+					Masina masinaAdd = Masina(posesor, nrInmatriculare, status);
+					this->serv.addMasina(masinaAdd);
+					cout << "Masina a fost adaugata" << endl << endl;
+					capacitateCurenta++;
+				}
+				else
+					cout << "Parcarea este plina" << endl << endl;
+			
+			}
+			else
+			{
+				Masina masinaAdd = Masina(posesor, nrInmatriculare, status);
+				this->serv.addMasina(masinaAdd);
+				cout << "Masina a fost adaugata" << endl << endl;
+			}
+			
 		}
 		else if (optiune == 2)  //optiunea 2
 		{

@@ -18,5 +18,7 @@ public:
 	void readMasini();
 	void deleteMasina(Masina m);
 	int getLen();
+
+	int getOcupat();
 };
 
