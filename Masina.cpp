@@ -40,6 +40,7 @@ Masina::Masina(const Masina & m)
 	strcpy_s(this->status, strlen(m.status) + 1, m.status);
 }
 
+//destructor pentru clasa Masina
 Masina::~Masina()
 {
 	if(this->nrInmatriculare)
@@ -61,11 +62,13 @@ Masina::~Masina()
 	}
 }
 
+//getter pentru numele posesorului
 char * Masina::getNumePosesor()
 {
 	return this->posesor;
 }
 
+//setter pentru numele posesorului
 void Masina::setNumePosesr(const char * n)
 {
 	if (this->posesor) {
@@ -76,11 +79,13 @@ void Masina::setNumePosesr(const char * n)
 	strcpy_s(this->posesor, strlen(n) + 1, n);
 }
 
+//getter pentru numarul de inmatriculare
 char * Masina::getNrInmatriculare()
 {
 	return this->nrInmatriculare;
 }
 
+//setter pentru numarul de inamtriculare
 void Masina::setNrInmatriculare(const char * n)
 {
 	if (this->nrInmatriculare) {
@@ -91,11 +96,13 @@ void Masina::setNrInmatriculare(const char * n)
 	strcpy_s(this->nrInmatriculare, strlen(n) + 1, n);
 }
 
+//getter pentru status
 char * Masina::getStatus()
 {
 	return this->status;
 }
 
+//setter pentru status
 void Masina::setStatus(const char * s)
 {
 	if (this->status) {
@@ -117,20 +124,24 @@ Masina & Masina::operator=(const Masina & m)
 	return *this;
 }
 
+bool Masina::operator==(const Masina & m)
+{
+	return (strcmp(this->posesor, m.posesor) == 0) && (strcmp(this->nrInmatriculare, m.nrInmatriculare) == 0) && (strcmp(this->status, m.status) == 0);
+}
+
 char * Masina::toString()
 {
 	if (this->posesor != NULL) {
-		int noChars = strlen(this->posesor)+strlen(this->nrInmatriculare)+strlen(this->status) + 1 + 5 + 5 + 2;
+		int noChars = strlen(this->posesor)+strlen(this->nrInmatriculare)+strlen(this->status) + 11;
 		char* s = new char[noChars];
 		
 		strcpy_s(s, noChars, this->posesor);
 		strcat_s(s, noChars, " ; ");
 
-		strcpy_s(s, noChars, this->nrInmatriculare);
+		strcat_s(s, noChars, this->nrInmatriculare);
 		strcat_s(s, noChars, " ; ");
 
-		strcpy_s(s, noChars, this->status);
-		strcat_s(s, noChars, " ; ");
+		strcat_s(s, noChars, this->status);
 
 
 		return s;
@@ -144,5 +155,8 @@ bool Masina::compare(Masina & m)
 	return (strcmp(this->posesor, m.posesor) == 0) && (strcmp(this->nrInmatriculare,m.nrInmatriculare)==0) && (strcmp(this->status, m.status) == 0);
 }
 
-
-
+ostream & operator<<(ostream & os, const Masina & m)
+{
+	os << m.posesor << " " << m.nrInmatriculare << " " << m.status;
+	return os;
+}
