@@ -23,6 +23,9 @@ public:
 	void setStatus(const char* s);
 
 	Masina& operator=(const Masina& m);
+	bool operator==(const Masina& m);
+	friend ostream& operator<<(ostream& os, const Masina& m);
+	
 	char* toString();
 	bool compare(Masina &m);
 };
