@@ -1,18 +1,24 @@
 #include "RepoFile.h"
 
+//constructor implicit pentru Repofile
 RepoFile::RepoFile()
 {
-	this->masini = {};
 	this->fisier = NULL;
 }
 
+//constructor cu parametri pentru Repofile
+//in: numele fisierului din care se vor citi date
+//out: RepoFile populat cu datele din fisier
 RepoFile::RepoFile(char * fisier)
 {
 	this->fisier = fisier;
 	citireFisier(fisier);
 }
 
-void RepoFile::citireFisier(char * fisier)
+//functie care citeste din fisier date
+//in: numele fisierului
+//out: RepoFile populat cu datele din fisier
+void RepoFile::citireFisier(const char * fisier)
 {
 	ifstream fin;
 	fin.open(fisier);
@@ -21,28 +27,19 @@ void RepoFile::citireFisier(char * fisier)
 		cout << "Eroare la deschiderea fisierului" << endl;
 	}
 	else
+	{
 		Masina masina;
 		char* posesor = new char[50];
 		char* nrInmatriculare = new char[50];
 		char* status = new char[50];
-		//string posesor, nrInmatriculare, status;
 		while (!fin.eof())
 		{
 			fin >> posesor >> nrInmatriculare >> status;
-			Masina m = Masina(posesor, nrInmatriculare, status);
-			this->masini.push_back(m);
+			masina = Masina(posesor, nrInmatriculare, status);
+			this->addMasina(masina);
+			
 		}
+	}
+	fin.close();
 }
 
-void RepoFile::scriereFisier()
-{
-}
-
-void RepoFile::addMasina(Masina m)
-{
-}
-
-list<Masina> RepoFile::getAll()
-{
-	return list<Masina>();
-}

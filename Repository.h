@@ -17,6 +17,9 @@ public:
 	void updateMasina(int index, Masina newM);
 	int getLen();
 	bool findElem(Masina m);
+	bool findNrInmatriculare(char* n);
+	char* getStatus(int index);
+	void updateStatus(const char* newS, int index);
 	list<Masina> getAll();
 	
 	

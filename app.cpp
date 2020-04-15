@@ -1,7 +1,5 @@
 #include "Repository.h"
-#include "Masina.h"
 #include "teste.h"
-#include "Service.h"
 #include "UI.h"
 #include <iostream>
  
@@ -11,6 +9,7 @@ int main()
 {
 	testMasina();
 	testRepository();
+	testRepoFile();
 	testService();
 	cout << endl;
 

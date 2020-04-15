@@ -21,6 +21,7 @@ Repository::~Repository()
 //out: -
 void Repository::addMasina(Masina m)
 {
+	
 	masini.push_back(m);
 }
 
@@ -82,6 +83,41 @@ bool Repository::findElem(Masina m)
 		}
 	}
 	return false;
+}
+
+//functie care verifica daca exista in RepoFile o Masina cu un numar de inamtriculare dat
+//in: numarul de inmatriculare cautat
+//out: true daca acel numar exista, false altfel
+bool Repository::findNrInmatriculare(char* n)
+{
+	for (auto elem : this->masini)
+	{
+		if (strcmp(elem.getNrInmatriculare(), n)==0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//functie care returneaza statusul unei masini dupa index
+//in: indexul masinii la care se doreste statusul
+//out: statusul masinii de la indexul dat
+char* Repository::getStatus(int index)
+{
+	this->it = masini.begin();
+	advance(this->it, index);
+	return this->it->getStatus();
+}
+
+//functie care actualizeaza statusul unei masini dupa index
+//in: noul status, indexul masinii care se actualizeaza
+//out: instanta de Masina cu statusul actualizat
+void Repository::updateStatus(const char* newS, int index)
+{
+	this->it = masini.begin();
+	advance(this->it, index);
+	this->it->setStatus(newS);
 }
 
 //getter pentru lista de masini

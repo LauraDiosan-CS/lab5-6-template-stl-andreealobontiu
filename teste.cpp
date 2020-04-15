@@ -1,13 +1,16 @@
 #include "teste.h"
 #include "Masina.h"
 #include "Repository.h"
+#include "RepoFile.h"
 #include "Service.h"
 #include <assert.h>
 #include <string.h>
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
+//teste pentru clasa Masina
 void testMasina()
 {
 	Masina m1 = Masina("andreea", "ab56afs", "liber");
@@ -29,6 +32,7 @@ void testMasina()
 	cout << "Testele pentru clasa Masina functioneaza" << endl;
 }
 
+//teste pentru clasa Repository
 void testRepository()
 {
 	Repository repo;
@@ -49,6 +53,8 @@ void testRepository()
 	repo.addMasina(m6);
 	
 	assert(repo.getLen() == 6);
+	assert(strcmp(repo.getStatus(1), "liber") == 0);
+	assert(repo.findNrInmatriculare(m3.getNrInmatriculare())==true);
 	repo.deleteMasina(m1);
 	assert(repo.getLen() == 4);
 
@@ -59,6 +65,7 @@ void testRepository()
 	cout << "Testele pentru clasa Repository functioneaza" << endl;
 }
 
+//teste pentru clasa Service
 void testService()
 {
 	Service serv;
@@ -75,6 +82,9 @@ void testService()
 	serv.addMasina(m4);
 	serv.addMasina(m5);
 	assert(serv.getRepo().getLen() == 5);
+	assert(strcmp(serv.getStatus(1), "liber") == 0);
+	serv.updateStatus("ocupat",1);
+	assert(strcmp(serv.getStatus(1), m1.getStatus()) == 0);
 	
 	serv.updateMasina(0, m5);
 	assert(serv.getRepo().findElem(m1) == false);
@@ -86,8 +96,26 @@ void testService()
 	assert(serv.getLen() != 0);
 	assert(serv.getRepo().getAll().empty() == false);
 
-	assert(serv.getOcupat() == 1);
+	assert(serv.getOcupat() == 2);
 	
 
 	cout << "Testele pentru clasa Service functioneaza" << endl;
+}
+
+//teste pentru clasa RepoFile
+void testRepoFile()
+{
+	RepoFile repoFile;
+	list<Masina>::iterator it = repoFile.getAll().begin();
+	Masina m = Masina("Dan", "SM-50-THU", "liber");
+	const char* fisier = new char[50];
+	fisier = "fisier.txt";
+	repoFile.citireFisier(fisier);
+	assert(repoFile.getLen() == 6);
+	repoFile.deleteMasina(1);
+	assert(repoFile.getLen() == 5);
+	assert(repoFile.findElem(m) == true);
+	assert(repoFile.findNrInmatriculare(m.getNrInmatriculare()) == true);
+
+	cout << "Testele pentru clasa RepoFile functioneaza" << endl;
 }

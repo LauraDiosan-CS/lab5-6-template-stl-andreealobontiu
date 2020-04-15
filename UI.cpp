@@ -11,9 +11,9 @@ void UI::printMeniu()
 	cout << "2. Arata lista de masini" << endl;
 	cout << "3. Actualizeaza o masina" << endl;
 	cout << "4. Sterge o masina" << endl << endl;
-	/*cout << "------SENZOR------" << endl;
+	cout << "------SENZOR------" << endl;
 	cout << "5. Intra cu o masina" << endl;
-	cout << "6. Iesi cu o masina" << endl<<endl;*/
+	cout << "6. Iesi cu o masina" << endl<<endl;
 }
 
 //functie care ruleaza aplicatia
@@ -21,8 +21,8 @@ void UI::interFace()
 {
 	int optiune;
 	bool stop = true;
-	Repository repo;
-	Masina m1 = Masina("Andreea", "AB-06-KXV", "ocupat");
+	RepoFile repo;
+	/*Masina m1 = Masina("Andreea", "AB-06-KXV", "ocupat");
 	Masina m2 = Masina("Alex", "CJ-56-ASD", "liber");
 	Masina m3 = Masina("Laura", "CJ-76-GHF", "liber");
 	Masina m4 = Masina("Constantin", "TL-03-LDF", "ocupat");
@@ -34,9 +34,13 @@ void UI::interFace()
 	this->serv.addMasina(m3);
 	this->serv.addMasina(m4);
 	this->serv.addMasina(m5);
-	this->serv.addMasina(m6);
+	this->serv.addMasina(m6);*/
 
-	int capacitateMax = 4;
+	const char* fisier = new char[50];
+	fisier = "fisier.txt";
+	this->serv.citireFisier(fisier);
+
+	int capacitateMax = 3;
 	int capacitateCurenta = this->serv.getOcupat();
 	
 	while (stop)
@@ -73,7 +77,7 @@ void UI::interFace()
 				{
 					Masina masinaAdd = Masina(posesor, nrInmatriculare, status);
 					this->serv.addMasina(masinaAdd);
-					cout << "Masina a fost adaugata" << endl << endl;
+					//cout << "Masina a fost adaugata" << endl << endl;
 					capacitateCurenta++;
 				}
 				else
@@ -84,7 +88,7 @@ void UI::interFace()
 			{
 				Masina masinaAdd = Masina(posesor, nrInmatriculare, status);
 				this->serv.addMasina(masinaAdd);
-				cout << "Masina a fost adaugata" << endl << endl;
+				//cout << "Masina a fost adaugata" << endl << endl;
 			}
 			
 		}
@@ -117,6 +121,10 @@ void UI::interFace()
 			cin >> newStatus;
 			Masina masinaUpdate = Masina(newPosesor, newNrInmatriculare, newStatus);
 			this->serv.updateMasina(index, masinaUpdate);
+			if (strcmp(newStatus,"ocupat")==0)
+			{
+				capacitateCurenta++;
+			}
 			cout << "Masina a fost actualizata" << endl << endl;
 		}
 		else if (optiune==4)  //optiunea 4
@@ -138,11 +146,61 @@ void UI::interFace()
 
 			cout << "Statusul: ";
 			cin >> delStatus;
-
-			Masina masinaDelete = Masina(delPosesor, delNrInmatriculare, delStatus);
-			this->serv.deleteMasina(masinaDelete);
-			cout << "Masina a fost stearsa" << endl << endl;
+			if (strcmp(delStatus,"ocupat")==0)
+			{
+				cout << "Masina nu poate fi stearsa" << endl;
+			}
+			else
+			{
+				Masina masinaDelete = Masina(delPosesor, delNrInmatriculare, delStatus);
+				this->serv.deleteMasina(masinaDelete);
+				cout << "Masina a fost stearsa" << endl << endl;
+			}
 			
+			
+		}
+		else if (optiune==5) //optiunea 5
+		{
+			int index1 = 0;
+			this->serv.readMasini();
+			cout << endl;
+			if (capacitateCurenta<capacitateMax)
+			{
+				cout << "Introduceti indexul masinii cu care doriti sa intrati: ";
+				cin >> index1;
+				if (strcmp(this->serv.getStatus(index1), "liber") == 0)
+				{
+					this->serv.updateStatus("ocupat", index1);
+					capacitateCurenta++;
+				}
+				else
+				{
+					cout << "Nu se poate intra cu aceasta masina" << endl;
+				}
+			}
+			else
+			{
+				cout << "Parcarea este plina" << endl << endl;
+			}
+			
+		
+		}
+		else if (optiune==6)  //optiunea 6
+		{
+			int index2 = 0;
+			this->serv.readMasini();
+			cout << endl;
+			cout << "Introduceti indexul masinii cu care doriti sa iesiti: ";
+			cin >> index2;
+			if (strcmp(this->serv.getStatus(index2), "ocupat") == 0)
+			{
+				this->serv.updateStatus("liber", index2);
+				capacitateCurenta--;
+			}
+			else
+			{
+				cout << "Nu se poate iesi cu aceasta masina" << endl;
+			}
 		}
 	}
 }
